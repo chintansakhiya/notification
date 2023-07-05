@@ -35,10 +35,10 @@ func Message(text string, mattermostWebhook string) {
 
 	var m Data
 	var data Attachment
- 
-		data.Color = "#B0fc38"
-		data.Text =  text
-	 
+
+	data.Color = "#B0fc38"
+	data.Text = "Message :" + text
+
 	m.Attachments = append(m.Attachments, data)
 
 	resty.New().R().SetBody(m).Post(mattermostWebhook)
