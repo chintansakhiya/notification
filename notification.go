@@ -4,7 +4,7 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-type Message struct {
+type Data struct {
 	Attachments []Attachment `json:"attachments"`
 }
 
@@ -15,7 +15,7 @@ type Attachment struct {
 
 func Error(err error, mattermostWebhook string) {
 
-	var m Message
+	var m Data
 	var data Attachment
 
 	if err == nil {
@@ -25,6 +25,20 @@ func Error(err error, mattermostWebhook string) {
 		data.Color = "#FF0000"
 		data.Text = err.Error()
 	}
+	m.Attachments = append(m.Attachments, data)
+
+	resty.New().R().SetBody(m).Post(mattermostWebhook)
+
+}
+
+func Message(text string, mattermostWebhook string) {
+
+	var m Data
+	var data Attachment
+ 
+		data.Color = "#B0fc38"
+		data.Text =  text
+	 
 	m.Attachments = append(m.Attachments, data)
 
 	resty.New().R().SetBody(m).Post(mattermostWebhook)
