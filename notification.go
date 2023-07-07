@@ -36,7 +36,7 @@ func Message(text string, mattermostWebhook string) {
 	var m Data
 	var data Attachment
 
-	data.Color = "#B0fc38"
+	data.Color = "#E28933"
 	data.Text = "Message :" + text
 
 	m.Attachments = append(m.Attachments, data)
