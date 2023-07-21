@@ -13,7 +13,7 @@ type Attachment struct {
 	Text  string `json:"text"`
 }
 
-func Error(err error, mattermostWebhook string) {
+func Error(err error, mattermostWebhook string) error {
 
 	var m Data
 	var data Attachment
@@ -24,14 +24,15 @@ func Error(err error, mattermostWebhook string) {
 	} else {
 		data.Color = "#FF0000"
 		data.Text = err.Error()
+		err = nil
 	}
 	m.Attachments = append(m.Attachments, data)
 
-	resty.New().R().SetBody(m).Post(mattermostWebhook)
-
+	_,err=resty.New().R().SetBody(m).Post(mattermostWebhook)
+	return err
 }
 
-func Message(text string, mattermostWebhook string) {
+func Message(text string, mattermostWebhook string) error {
 
 	var m Data
 	var data Attachment
@@ -41,6 +42,6 @@ func Message(text string, mattermostWebhook string) {
 
 	m.Attachments = append(m.Attachments, data)
 
-	resty.New().R().SetBody(m).Post(mattermostWebhook)
-
+	_, err := resty.New().R().SetBody(m).Post(mattermostWebhook)
+	return err
 }
